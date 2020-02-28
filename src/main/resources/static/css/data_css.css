@@ -1,0 +1,27 @@
+.main{
+    margin: 30px;
+    background-color: white;
+}
+
+
+body{
+    background-color: #efefef;
+}
+
+
+.btn-publish{
+    float: right ;
+    margin-bottom: 20px;
+}
+
+
+.head-img{
+    width: 38px;
+}
+
+
+.tag-text{
+    font-size: 12px;
+    font-weight: normal;
+    color:#999999;
+}

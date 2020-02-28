@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Blogger</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="css/data_css.css"/>
+    <script src="js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+<body background="#efefef">
+<div th:insert="~{navigation::navi}"></div>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-xs-12"  th:height="300px" >
+            <h2> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            发布</h2>
+            <hr>
+            <form action="/publish" method="post">
+
+                <div class="form-group">
+                    <label for="title">数据名称</label>
+                    <input type="text" class="form-control" name="title" th:value="${title}" id="title" placeholder="标题名称>>>>>">
+                </div>
+
+                <div class="form-group">
+                    <label for="title">数据介绍及其简要分析</label>
+                    <textarea class="form-control" rows="3" name="description" th:text="${description}"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="title">数据标签</label>
+                    <input type="text" class="form-control" name="tag" id="tag" th:value="${tag}" placeholder="数据类型（输入以，隔开）">
+                </div>
+
+                <div class="alert alert-danger" th:if="${error!=null }" th:text="${error}"></div>
+                <button type="submit" class="btn btn-success btn-publish">发布</button>
+
+            </form>
+        </div>
+        <div class="col-lg-3 col-md-12 col-xs-12" >
+            <h3>发布说明</h3>
+            1、数据正规渠道获得<br>
+            2、发布仅用于交流学习所有发布不用于商业用途<br>
+            3、如有问题请发邮件至jx642839227@163.com<br>
+        </div>
+    </div>
+</div>
+</body>
+</html>
