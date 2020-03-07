@@ -3,10 +3,12 @@
 <head>
     <title>Blogger</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
-    <link rel="stylesheet" href="css/data_css.css"/>
-    <script src="js/bootstrap.min.js" type="application/javascript"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" th:href="@{/static/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/bootstrap-theme.min.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/data_css.css}"/>
+    <script th:src="@{/static/js/bootstrap.min.js}" type="application/javascript"></script>
+    <script th:src="@{/static/js/jquery-3.4.1.min.js}"></script>
 </head>
 <body background="#efefef">
 <div th:insert="~{navigation::navi}"></div>
@@ -17,7 +19,7 @@
             发布</h2>
             <hr>
             <form action="/publish" method="post">
-
+                <input type="hidden" th:value="${id}">
                 <div class="form-group">
                     <label for="title">数据名称</label>
                     <input type="text" class="form-control" name="title" th:value="${title}" id="title" placeholder="标题名称>>>>>">

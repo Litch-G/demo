@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>出问题了</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" th:href="@{/static/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/bootstrap-theme.min.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/data_css.css}"/>
+    <script th:src="@{/static/js/bootstrap.min.js}" type="application/javascript"></script>
+    <script th:src="@{/static/js/jquery-3.4.1.min.js}"></script>
+
+</head>
+<body>
+<div th:insert="~{navigation :: navi}"></div>
+
+    <div class="main container-fluid">
+         <h1>出现错误</h1>
+            <p th:text="${note}">服务暂时无法访问，或许你想返回主页</p>
+            <p><a class="btn btn-primary btn-lg" href="/" role="button">返回主页</a></p>
+    </div>
+
+</body>
+</html>

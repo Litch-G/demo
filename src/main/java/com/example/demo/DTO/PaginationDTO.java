@@ -2,7 +2,7 @@ package com.example.demo.DTO;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//分页中间信息传递
 public class PaginationDTO {
     private List<DataPublishDTO> dataPublishDTOList;
     private boolean showPrevious;

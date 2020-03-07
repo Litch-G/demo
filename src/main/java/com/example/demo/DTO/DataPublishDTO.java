@@ -2,7 +2,7 @@ package com.example.demo.DTO;
 
 
 import com.example.demo.model.User;
-
+//发布中间传递
 public class DataPublishDTO {
     private Integer id;
     private String title;
