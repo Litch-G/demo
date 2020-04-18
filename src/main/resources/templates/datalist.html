@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -8,12 +9,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" th:href="@{/static/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/static/css/bootstrap-theme.min.css}"/>
-    <link rel="stylesheet" th:href="@{/static/css/data_css.css}"/>
+    <link rel="stylesheet" href="../static/css/data_css.css">
     <script th:src="@{/static/js/bootstrap.min.js}" type="application/javascript"></script>
     <script th:src="@{/static/js/jquery-3.4.1.min.js}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.6.0/echarts-en.min.js"></script>
     <script src="../static/js/demo-mine.js"></script>
     <title th:text="${data.title}"></title>
+
 </head>
 <body>
 <div th:insert="~{navigation::navi}"></div>
@@ -21,18 +23,79 @@
     <div class="row">
         <div class="col-lg-9 col-md-12 col-xs-12"  th:height="300px" >
             <h4> <span th:text="${data.title}"></span></h4><br>
-
             作者 : <span class="tag-text" th:text="${data.user.getName()}"></span> | </span>
             <span class="tag-text"><span th:text="${data.commentCount}"></span>个回复 · <span th:text="${data.viewCount}"></span>次浏览·
                 发布时间 : <span th:text="${#dates.format(data.gmtCreate,'yyyy-MM-dd HH:mm')}"></span></span>
-            <hr class="col-lg-9 col-md-12 col-xs-12">
-            <div class="col-lg-9 col-md-12 col-xs-12" th:text="${data.description}"></div>
-            <hr class="col-lg-9 col-md-12 col-xs-12">
-            <span th:if="${session.user!=null && session.user.id == data.user.id}" class="glyphicon glyphicon-pencil col-lg-9 col-md-12 col-xs-12" aria-hidden="true"><a class="data-menu" th:href="@{'/publish/'+${data.id}}">编辑</a> </span>
-            <br>
-            <br>
-            <br>
-            <hr class="col-lg-9 col-md-12 col-xs-12">
+            <hr class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-9 col-md-12 col-xs-12 description-style" th:text="${data.description}">
+            </div>
+            <div  class="col-lg-9 col-md-12 col-xs-12" id="main" style="width: 600px;height:400px;"></div>
+            <script type="text/javascript" th:inline="javascript">
+                // 基于准备好的dom，初始化echarts实例
+                var myChart = echarts.init(document.getElementById('main'));
+                var num1 = [[${map.get('comedy')}]]
+                var num2 = [[${map.get('sci_fi')}]]
+                var num3 = [[${map.get('log')}]]
+                var num4 = [[${map.get('suspense')}]]
+                var num5 = [[${map.get('comic')}]]
+                console.log(num3)
+                // 指定图表的配置项和数据
+                var option = {
+                    title: {
+                        text: '某用户喜爱电影'
+                    },
+                    tooltip: {},
+                    legend: {
+                        data:['浏览量']
+                    },
+                    xAxis: {
+                        data: ["comedy","sci_fi","log","suspense","comic"]
+                    },
+                    yAxis: {},
+                    series: [{
+                        name: '浏览量',
+                        type: 'bar',
+                        data: [num1, num2, num3, num4, num4, num5]
+                    }]
+                };
+
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+
+            </script>
+            <hr class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-9 col-md-12 col-xs-12 ">
+                <span class="label label-info comment-lab" th:each="tag:${data.tag.split(',')}" >
+                    <span class="glyphicon glyphicon-tags"></span>
+                    <span th:text="${tag}"></span>
+                </span>
+            </div>
+            <hr class="col-lg-12 col-md-12 col-xs-12">
+            <span th:if="${session.user!=null && session.user.id == data.user.id}" style="margin-top: 20px;" class="glyphicon glyphicon-pencil col-lg-9 col-md-12 col-xs-12" aria-hidden="true"><a class="data-menu" th:href="@{'/publish/'+${data.id}}">编辑</a> </span>
+            <div class="col-lg-12 col-md-12 col-xs-12 comment-head">
+                <span th:text="${comments.size()}"></span>个评论
+            </div>
+            <!--列表回复-->
+            <div class="col-lg-12 col-md-12 col-xs-12 comment-box" th:each="comment:${comments}" >
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object img-circle head-img" src="https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1593959437,3396904299&fm=111&gp=0.jpg" >
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading" ><a href="/profile/publish"
+                                                      th:text="${comment.user.getName()}"></a></h4>
+                        <div th:text="${comment.getContent()}"></div>
+                        <div class="menu">
+                            <span class="icon glyphicon glyphicon-thumbs-up"></span>
+                            <span class="icon glyphicon glyphicon-comment"></span>
+                            <span class="pull-right tag-text" th:text="${#dates.format(comment.gmtCreate,'yyyy-MM-dd')}"></span></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
             <div class="col-lg-12 col-md-12 col-xs-12" id="comment-div">
                 <h3>评论 | <span class="glyphicon glyphicon-hand-right"></span></h3>
 
@@ -69,40 +132,20 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 relate">
                 <h4>相关数据</h4>
+                <ul>
+                    <li th:each="relate:${relatedPublish}" class="relate-data">
+                        <a th:href="@{'/dataList/'+${relate.id}}" th:text="${relate.title}"></a>
+                    </li>
+                </ul>
             </div>
             </div>
         </div>
+
     <div class="col-lg-9 col-md-12 col-xs-12"  th:height="300px" >
-    <div id="main" style="width: 600px;height:400px;"></div>
-    <script type="text/javascript">
-        // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('main'));
 
-        // 指定图表的配置项和数据
-        var option = {
-            title: {
-                text: '某用户喜爱'
-            },
-            tooltip: {},
-            legend: {
-                data:['浏览量']
-            },
-            xAxis: {
-                data: ["国内电影","国外电影","国内连续剧","国外连续剧","国内纪录片","国外纪录片"]
-            },
-            yAxis: {},
-            series: [{
-                name: '浏览量',
-                type: 'bar',
-                data: [5, 20, 36, 10, 10, 20]
-            }]
-        };
-
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
-    </script>
     </div>
     </div>
 </body>

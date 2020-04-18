@@ -13,7 +13,8 @@ function post() {
         }),
         success:function (response) {
             if(response.code == 200){
-             $("#comment-div").hide();
+                window.location.reload();
+
             }else {
                 if(response.code == 2003){
                     var isLogin = confirm(response.message);

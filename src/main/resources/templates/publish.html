@@ -18,8 +18,8 @@
             <h2> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             发布</h2>
             <hr>
-            <form action="/publish" method="post">
-                <input type="hidden" th:value="${id}">
+            <form action="/publish" method="post" enctype="multipart/form-data">
+                <input type="hidden" th:value="${id}" name="id">
                 <div class="form-group">
                     <label for="title">数据名称</label>
                     <input type="text" class="form-control" name="title" th:value="${title}" id="title" placeholder="标题名称>>>>>">
@@ -34,11 +34,11 @@
                     <label for="title">数据标签</label>
                     <input type="text" class="form-control" name="tag" id="tag" th:value="${tag}" placeholder="数据类型（输入以，隔开）">
                 </div>
-
+                <input type="file" name="file"><br>
                 <div class="alert alert-danger" th:if="${error!=null }" th:text="${error}"></div>
                 <button type="submit" class="btn btn-success btn-publish">发布</button>
-
             </form>
+
         </div>
         <div class="col-lg-3 col-md-12 col-xs-12" >
             <h3>发布说明</h3>
